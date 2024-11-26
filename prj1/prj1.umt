@@ -1,0 +1,674 @@
+                      P r o j e c t   1
+
+*Due*: Sep 18, before midnight.
+
+*Important Reminder*: As per the course
+.<../../misc/academic-honesty/academic-honesty-policy.html>
+"Academic Honesty Policy", cheating of any kind will minimally
+result in your letter grade for the entire course being reduced by one
+level.
+
+This document first provides the aims of this project.  It then lists
+the requirements as explicitly as possible.  It then hints at how
+these requirements can be met.  Finally, it describes how it can be
+submitted.
+
+                        Aims
+                        ====
+
+The aims of this project are as follows:
+
+  + To expose you to advanced C programming.
+
+  + To design and implement an ADT.
+
+  + To introduce you to the issues involved in manually managing
+    dynamic memory.
+
+  + To start building a chat application (which will be fleshed out
+    in subsequent projects).
+
+
+                        .=require= Requirements
+                        =======================
+  
+Submit a .<https://linux.die.net/man/1/zip> "zip"-archive which
+unpacks into a `prj1-sol` directory containing a `Makefile` such that
+typing `make` in that directory will implement the specifications
+provided in .<./prj1-sol/chat-io.h> chat-io.h.
+
+The `prj1-sol` directory must contain a `README` documenting
+the details of your project submission, including the contact
+information for both team members.
+
+You are required to design an I/O independent specification for a chat
+ADT and provide both a specification and implementation file.
+
+The program should not have any hardcoded limits on the size of inputs
+beyond those dictated by the availability of memory.  It should ensure
+that all allocated memory is freed before a success exit.
+
+You are not allowed to use any libraries other than `libc`.
+
+An annotated .<extras/LOG?lang=sh> log of the running project and the
+.<extras/tests> "provided tests" should help clarify the above
+requirements.
+
+                         Provided Files
+                         ==============
+
+The .<./prj1-sol> prj1-sol directory contains starter files as well as
+a template README which you must complete and include with your
+submission.
+
+
+  : .<prj1-sol/chat-io.h> chat-io.h :
+    A specification file providing the specifications for
+    the `chat_io()` function you are required to implement.
+
+  : .<prj1-sol/chat-io.c> chat-io.c :
+    A skeleton file which provides a `main()` function for the entire
+    program and an empty implementation for the `chat_io()` function
+    which you are required to implement.
+
+    You will need to flesh out the `chat_io()` function.
+
+  : .<prj1-sol/chat.h> chat.h :
+    A skeleton file which is essentially empty.  You will fill this
+    in with a specification for your chat ADT.
+
+  : .<prj1-sol/chat.c> chat.c :
+    A skeleton file in which you should implement the ADT
+    specified in the `chat.h`.
+
+  : .<prj1-sol/msgargs.h> msgargs.h and .<prj1-sol/msgargs.c> msgargs.c :
+    A specification and implementation file for reading a chat command
+    from an input stream.  You should not need to modify these files.
+
+  : .<prj1-sol/errnum.h> errnum.h and .<prj1-sol/errnum.c> errnum.c :
+    A specification and implementation for error codes.  The
+    implementation file simply provides a function for translating
+    integer error codes into strings.
+
+  : .<prj1-sol/Makefile> Makefile :
+    A `Makefile` for the .<https://www.gnu.org/software/make/manual/>
+    make build tool.  You should not need to modify this file as long
+    as you use the same project structure as outlined above.
+
+  : .<./prj1-sol/README> README:
+    A README file which must be submitted along with your project.  It
+    contains an initial header which you must complete (replace the
+    dummy entries with your name, B-number and email address at which
+    you would like to receive project-related email).  After the
+    header you may include any content which you would like read
+    during the grading of your project.
+
+  : .<prj1-sol/.zipignore> ".zipignore" :
+    A file containing ignore patterns for the provided
+    .<../../bin/do-zip.sh?lang=sh> do-zip.sh script.
+
+  : .<prj1-sol/.gitignore> ".gitignore" :
+    A file containing ignore patterns for git.
+
+
+The .<./extras> extras directory contains auxiliary files associated
+with the project, including files which can help with testing your
+project.
+
+  : .<extras/tests> tests :
+    A directory containing tests.  There are two kinds of files:
+
+      : `*.test` :
+        A file containing a test which is expected to succeed.
+        If the basename ends with `-err`, then stderr is expected to
+        contain error message lines starting with a `:`-terminated error
+    	code prefix.
+
+      : `*.out` :
+        A file containing the expected output for the corresponding
+    	`*.test` file.  All error lines are replaced by their error
+    	code prefixes.
+
+
+  : .<extras/do-tests.sh?lang=sh> do-tests.sh :
+    A shell script which can be used for running the above tests.
+    It can be invoked from any directory and takes up to two arguments:
+
+       # The path to your `run.sh` shell script.  
+
+       # An optional argument giving the path to a single test
+         to be run.
+
+    If invoked with only a single argument, the script will run
+    all tests.  If invoked with a second argument, then it will
+    run only the test specified by that argument.
+
+  : .<extras/LOG?lang=sh> LOG :
+    An annotated log file illustrating the interactive operation of the project.
+
+Additionally, you are also being provided with a `cs551` library in
+.<../../lib> lib with the sources files in .<../../src/libcs551>
+src/libcs551.  This library provides .<../../include/memalloc.h>
+"checked wrappers" for `malloc()` and friends, as well as
+.<../../include/errors.h> "simple functions" for printing errors and a
+.<../../include/trace.h> "trace utility" triggered by a preprocessor
+macro `DO_TRACE`.
+
+	       	    .=design= Design Considerations
+		    ===============================
+
+It is clear that your application will need to track individual chat
+messages.  If using a language like Java, one approach might use a
+declaration like:
+
+.code(lang=java)
+~~~
+class ChatMsg {
+  String user;
+  String room;
+  String[] topics;
+  String message;
+  ...
+}
+
+class Chats {
+  //some kind of collection of ChatMsg's.
+  List<ChatMsg> chats;
+  ...
+}
+~~~
+
+A trivial difference for a C implementation is that it would use a
+`struct` rather than a `class`.  There are more substantial
+differences with respect to manual memory allocation:
+
+  + Memory has to be allocated for the `user`, `room` and `message`
+    strings.
+
+  + Memory has to be allocated for the `topics` array as well as for the
+    strings within that array.
+
+  + The `chat` collection has to be implemented manually.
+
+First we consider possiblities for the `ChatMsg` `struct` before
+considering possibilities for the collection.
+
+                      The Chat Message Structure
+		      --------------------------
+
+The possibilities include structures which have a size known at
+compile time and other structures which have a size which will be
+known only at runtime.
+
+  # *A separate malloc() for each piece of dynamic data*
+
+    .code(lang=c)
+    ~~~
+    typedef struct {
+      const char *user;     //pointer to user string.
+      const char *room;     //pointer to room string.
+      size_t nTopics;       //# of topics
+      const char **topics;  //pointer to array of topic strings
+      const char *message;  //pointer to message string.
+    } ChatMsg;
+    ~~~
+
+    In this case, the `user`, `room` and `message` would each be a
+    pointer to a `malloc()`ed area having sizes `strlen(user) + 1`,
+    `strlen(room) + 1` and `strlen(message) + 1` respectively (the `+
+    1` accounts for the necessary terminating `NUL` character).  If
+    there are `n` topics, then `topics` will be a pointer to an
+    `n`-element `char *` array, where each element of the array will
+    be a pointer to a topic string.
+
+    This organization will require multiple allocations for each
+    chat message:
+
+      # A `malloc()` for the `user` string.
+
+      # A `malloc()` for the `room` string.
+
+      # A `malloc()` for the `message` string.
+
+      # A `malloc()` for the `n`-element `topics` array.
+
+      # A `malloc()` for each of `n` `topics` string.
+
+      # A `malloc()` for the overall `ChatMsg` structure.
+
+    This will result in a total of `5 + n` `malloc()`'s.
+
+    The size of this structure will be known at compile time but the
+    data for a single chat message may be scattered all over memory.
+
+  # *A single malloc()*
+
+
+    .code(lang=c)
+    ~~~
+    typedef struct {
+      const char *user;    //pointer to user string within buf[].
+      const char *room;    //pointer to room string within buf[].
+      size_t nTopics;      //# of topics
+      const char *topics;  //pointer to topics[0] string within buf[].
+      const char *message; //pointer to message string within buf[].
+      char buf[];          //flexi array big enough for all chat strings
+    } ChatMsg;
+    ~~~
+
+    The size of the `buf[]` array would depend on the size of the
+    strings in the message; `user`, `room` and `message` would point
+    within `buf[]`; `topics` would also be a pointer within `buf[]`
+    pointing to the first `topic` string.  Subsequent `topic` strings
+    can be found after the terminating `NUL` character after the
+    previous `topic` string.
+
+    We will need to have:
+
+    $$$
+    \begin{array}{rl}
+    \texttt{sizeof(buf)} = &(\texttt{strlen(user)} + 1) \\
+                         + &(\texttt{strlen(room)} + 1) \\
+                         + &(\texttt{strlen(message)} + 1) \\
+			 + &\sum_{i=0}^{n-1} (\texttt{strlen(topics[i])} + 1)
+    \end{array}			 
+    $$$
+
+    The single `malloc()` would simply allocate `sizeof(ChatMsg) +
+    sizeof(buf)` bytes.  This size of this cannot be determined until
+    runtime, but all the data for a single `ChatMsg` will be in
+    contiguous memory.
+
+  # *A single malloc() using indexes instead of pointers*
+
+    This would be almost the same as the previous alternative,
+    but would use indexes into `buf[]` rather than pointers.
+    This would make it easier to serialize `ChatMsg` across
+    a network.
+
+    .code(lang=c)
+    ~~~
+    typedef struct {
+      const size_t user;    //index of user string within buf[].
+      const size_t room;    //index of room string within buf[].
+      size_t nTopics;       //# of topics
+      const size_t topics;  //index of topics[0] string within buf[].
+      const size_t message; //index of message string within buf[].
+      char buf[];           //flexi array big enough for all chat strings
+    } ChatMsg;
+    ~~~
+
+    Considerations about the size of the `buf[]` array would be
+    identical to the previous alternative.
+
+  # *Shared user, room and topic strings*
+
+    This could use either of the above two approaches, but instead
+    of storing the same `user` string for each `ChatMsg` in which it appears,
+    we would store the `user` string only once and share that string
+    among multiple `ChatMsg` structures.  Similarly for `room`, and
+    the `topics` strings.
+
+    This approach would be more memory efficient than the previous
+    approaches, but would require keeping some kind of dynamically
+    allocated string space to store the shared strings.
+
+			The `chat` Collection
+			---------------------
+
+Possibilities for implementing the `chat` collection include
+a linked-list and a dynamically grown vector.  Tradeoffs:
+
+  + If chats are added at the front of the linked list,
+    then addition of a new chat, or retrieving the last
+    .$n$ chats becomes very easy.
+
+  + A vector where each element stores a `ChatMsg` directly is
+    possible only if `sizeof(ChatMsg)` is known at compile time.
+    OTOH, if `sizeof(ChatMsg)` is known only at runtime, then each
+    element of a vector would necessarily need to be a pointer to a
+    `ChatMsg`.
+
+  + For a linked list, if `sizeof(ChatMsg)` is known only at runtime,
+    then each node of the list either needs to contain a pointer to a
+    `ChatMsg` or the node should be laid out such that the pointer to
+    the next node of the list appear before the variable sized
+    `ChatMsg`.
+
+Note that the handle used for accessing all chats will typically be
+a pointer to the `struct` implementing this collection.
+
+                        Hints
+                        =====
+
+This section is not prescriptive in that you may choose to ignore
+it as long as you meet all the project requirements.
+
+
+The following points are worth noting:
+
+
+  + While developing the project, you will probably be running
+    tests provided in the .<extras> extras directory.  It may
+    be convenient to set up a shortcut shell variable in the
+    shell you are using for developing your project.
+
+    .code(lang=sh)
+    ```
+    $ extras=$HOME/cs551/projects/prj1/extras
+    # run a particular test
+    $ $extras/do-tests.sh ./chat $extras/tests/02-basic.test
+    # run all tests
+    $ $extras/do-tests.sh ./chat
+    ```
+
+  + You will need to perform dynamic memory allocation for
+    implementing your `chat` ADT.  It will not be possible to use the
+    .<../../include/memalloc.h> "checked allocation wrappers" from the
+    `cs551` library as they will terminate your program.  Hence your
+    ADT will need to return any memory allocation errors to its
+    client; typically this will be done by setting an error code via a
+    `ErrNum *errnum` pointer.
+
+  + An example memory allocation within an ADT function will 
+    look something like the following:
+
+    .code(lang=c)
+    ~~~
+    SomeReturnType
+    SomeADTFn(..., ErrNum *err, ...)
+    {
+      ...
+      const char *msg = ... ;
+      char *msgCopy = malloc(strlen(msg) + 1);
+      if (!msgCopy) { *err = MEM_ERR; return ... ; }
+      strcpy(msgCopy, msg);
+      ...
+    }
+    ~~~
+
+  + An allocation for something like the topics array within an ADT
+    function will look something like the following:
+
+    .code(lang=c)
+    ~~~
+    SomeReturnType
+    SomeADTFn(..., ErrNum *err, ...)
+    {
+      ...
+      size_t nTopics = ... ;
+      const char *topics[] = ... ;
+      char *topicsCopy = malloc(nTopics * sizeof(char *));
+      if (!topicsCopy) { *err = MEM_ERR; return ... ; }
+      //foreach i in [0, nTopics), initialized  topicsCopy[i] to
+      //point to freshly allocated copy of topics[i]
+      ...
+    }
+    ~~~
+
+  + The GNU
+    .<https://www.man7.org/linux/man-pages/man3/strcasecmp.3.html>
+    strcasecmp() library function may be useful for comparing strings.
+
+  + The `stpcpy_lc()` function in the .<../../slides/advanced-c/code/linked-list/linked-list.c> linked-list.c implementation discussed in class may be useful
+    for copying strings while converting to lower-case.
+
+  + Look into debugging possibilities.  I use .<https://www.sourceware.org/gdb/>
+    gdb; if using VS Code, you should be able to set it up for debugging
+    C code.
+
+    When all else fails, use the provided .<../../include/trace.h> TRACE
+    macro or insert `printf()` statements.
+
+You may proceed as follows:
+
+  # Make sure that your VM is set up as per the
+    .<../../misc/vm-setup/vm-setup.html>  instructions.
+
+  # The vanilla installation on the VM does not include
+    .<https://valgrind.org/> valgrind.  Go ahead and install it using
+    `snap`:
+
+    .code(lang=sh)
+    ```
+    sudo snap install --classic valgrind
+    ```
+
+    You will need to provide your VM password.
+
+  # Copy over the provided `prj1-sol` directory to your `i551/submit`
+    directory (both of them should exist if you have set up your VM as
+    .<../../misc/vm-setup/vm-setup.html> instructed).
+
+    .code(lang=c)
+    ```
+    $ cd ~/i551/submit
+    $ cp -r ~/cs551/projects/prj1/prj1-sol .
+    ```
+
+  # You should be able to build and run the project from within your
+    working `i551/submit/prj1-sol` directory:
+
+    .code(lang=sh)
+    ~~~
+    $ make
+      ...
+    $ ./chat
+    $
+    ~~~
+
+    Of course, the project will not do anything until you implement
+    the `chat_io()` function.
+
+  # Fill in the `README` template and commit all your changes to github.
+
+  # Review the .<../../slides/advanced-c/advanced-c.html> material in
+    the slides.  In particular, review the code for the
+    .<../../slides/advanced-c/advanced-c.html#linked-list>
+    "linked-list ADT" as well as code for the
+    .<../../slides/advanced-c/advanced-c.html#coll-interfaces>
+    "multiple collection interfaces".
+
+  # Make sure you understand the .<prj1-sol/chat-io.h> specifications
+    for this project. Make sure you also understand the difference
+    between *system errors* and *user errors*.
+
+    Also be sure to understand the provided .<prj1-sol/msgargs.h> msgargs
+    module.  It can be used to take care of all the low-level input needed
+    by your project.
+
+  # Review the .<#design> "Design Considerations" and come up with
+    a design.
+
+  # Both team members should cooperatively update .<prj1-sol/chat.h>
+    chat.h to specify an ADT for a `chat` object.  Requirements
+    for the ADT:
+
+      + It should not be overly general but just provide the
+        functionality needed for this project.
+
+      + The details of the implementation must be hidden by
+        the ADT.  This can be done by declaring the ADT type
+	using an incomplete `struct` in the `chat.h` specification
+	file and completing that `struct` in the `chat.c` implementation
+	file.
+
+	It should be possible to change the implementation to use a
+	different design without needing to change the ADT
+	specification.
+
+      + It should not do *any* I/O.
+
+      + It should not detect any user errors.
+
+      + It can report system errors back to the caller using a simple
+        `errNum` pointer (like in the
+        .<../../slides/advanced-c/advanced-c.html#coll-interfaces>
+        "example interface" covered in class).
+
+  # Given the above ADT, both members of the team can subsequently
+    work quite independently.
+
+      + One team member should complete the implementation of the
+        `chat_io()` function in .<prj1-sol/chat-io.c> chat-io.c using
+        the ADT designed in the previous step.  This implementation
+        must do *all* checking for user errors, thus ensuring that the
+        ADT can ignore them.
+
+      + The other team member should complete the implementation
+        of the `chat` ADT in the `chat.c` file.
+
+    It is entirely possible that the specification of the ADT
+    will need to change as the project is understood better.
+
+  # Test your program interactively using the `main()` function
+    provided in the skeleton .<prj1-sol/chat-io.c> chat-io.c
+    function as in the provided .<extras/LOG?lang=sh> LOG.
+
+    The `main()` function will provide `"> "` as a prompt to your
+    `chat_io()` function when it is run interactively; otherwise it
+    will provide `""` as the prompt.  Hence a correct implementation
+    of the `chat_io()` function should display a `"> "` prompt before
+    each chat command when used interactively.
+
+  # Run the provided tests.
+
+    .code(lang=sh)
+    ```
+    $ ~/cs551/projects/prj1/extras/do-tests.sh ./chat
+    ```
+
+    Debug any failing tests.  Note that you can run a single test by
+    adding an additional argument to the above command providing the
+    path to the failing test.
+
+  # Check for memory allocation failures by running the program using
+    `valgrind`.
+
+    For example, the following will check whether a NOP-chat cleans
+    up after itself:
+
+    .code(lang=sh)
+    ~~~
+    $ valgrind ./chat
+    ... lots of valgrind messages ...
+    ...
+    # interactive chat prompt, type ^D for EOF
+    >
+    ... lots more valgrind messages ...
+    ...
+    ~~~
+
+    If the memory is cleaned up you should see something like:
+
+    ```
+    All heap blocks were freed -- no leaks are possible
+    ```
+
+    If you get memory errors, then debug and fix.
+
+  # Check for memory allocation failures for each of the provided
+    tests:
+
+    .code(lang=sh)
+    ~~~
+    $ for t in ~/cs551/projects/prj1/extras/tests/*.test; \
+      do \
+        valgrind ./chat $t ; \
+      done      
+    ~~~
+
+  # Iterate until you meet all requirements.
+
+It is always a good idea to keep committing your project periodically
+to git to ensure that you do not accidentally lose work.
+
+
+	     	   .=submission= Submission
+		   ========================
+
+
+You are required to submit a .<https://linux.die.net/man/1/zip> "zip"-archive
+to gradescope (you can access gradescope from the *Tools* menu on the
+brightspace navigation for this course).
+
+Unpacking the archive should result in at least the following files:
+
+```
+prj1-sol/README
+prj1-sol/Makefile
+```
+
+The unpacked `prj1-sol` directory should contain all other source
+files needed to build and run your project by typing `make`
+followed by `./chat` in your `prj1-sol` directory.  You should
+not submit binary files like your `chat` executable or any `*.o`
+object files.
+
+For example, a sample zip file for the project solution contains:
+
+```
+$ unzip -l prj1-sol.zip
+Archive:  prj1-sol.zip
+  Length      Date    Time    Name
+---------  ---------- -----   ----
+      693  2024-09-04 08:51   prj1-sol/Makefile
+      221  2024-09-04 18:53   prj1-sol/README
+     9233  2024-09-05 15:22   prj1-sol/chat-io.c
+     5276  2024-09-03 14:27   prj1-sol/chat-io.h
+     3619  2024-09-01 15:12   prj1-sol/chat.c
+     1036  2024-08-29 11:43   prj1-sol/chat.h
+      431  2024-09-04 09:30   prj1-sol/errnum.c
+      210  2024-08-26 19:15   prj1-sol/errnum.h
+     5352  2024-09-01 13:31   prj1-sol/msgargs.c
+     1479  2024-09-01 11:41   prj1-sol/msgargs.h
+---------                     -------
+    27550                     10 files
+```
+
+A .<../../bin/do-zip.sh?lang=sh> do-zip.sh script has been created to
+facilitate creating the zip file.  Please read the comments at the
+start of the script.  A suitable .<prj1-sol/.zipignore> ".zipignore" has
+been added to the directory containing the starter files (Note that
+this file was only added to the `prj1-sol` directory when this
+section of the assignment was updated; you will need to manually
+copy this file into your working `prj1-sol` directory.) This `.zipignore`
+is suitable for a C project.
+
+Once you have your working `prj1-sol` directory set up with the
+`.zipignore` file, you can build the zip using:
+
+.code(lang=sh)
+```
+$ cd ~/i551/submit
+$ ls # should show your prj1-sol directory
+$ ~/cs551/bin/do-zip.sh prj1-sol
+$ ls # should show prj1-sol.zip file to be submitted
+```
+
+You should verify your zip file before submission.  Simply unzip it
+into a `tmp` directory:
+
+.code(lang=sh)
+~~~
+$ mkdir -p ~/tmp
+$ cd ~/tmp
+$ unzip PATH_TO_ZIP_FILE  # maybe something like ~/i551/submit/prj1-sol.zip
+~~~
+
+This should *create* a `prj1-sol` directory in `~/tmp`, Go into
+`~/tmp/prj1-sol` and you should be able to successfully run `make`
+to create your `chat` executable.
+
+When you submit your zip file to gradescope, it will run automated tests:
+
+  # Verify that all required files have been included.
+
+  # Build your `chat` executable using `make`.
+
+  # Use your `chat` executable to run some tests (note that the actual project
+    grading may use additional tests).
+
+If a step fails, then subsequent steps are aborted.
+
+

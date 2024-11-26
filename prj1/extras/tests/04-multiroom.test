@@ -1,0 +1,29 @@
++ @zdu test #test1
+This is test message 1
+.
++ @zdu poems #lewis-carroll #jabberwocky #first-lines
+’Twas brillig, and the slithy toves
+.
++ @zdu test #xx
+This is test message 2
+.
+? test
+.
+? poems 5
+.
++ @zdu poems #lewis-carroll #the-hunting-of-the-snark #first-lines
+"Just the place for a Snark!" the Bellman cried,
+.
++ @zdu test #test3
+This is test message 3
+.
+? poems
+.
+? poems 5 #lewis-carroll
+.
+? test #test1
+.
+? poems 2 #jabberwocky
+.
+? poems 1 #lewis-carroll
+.

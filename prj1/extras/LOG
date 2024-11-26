@@ -1,0 +1,73 @@
+# start chat, reading from stdin
+$ ./chat
+
+# add a message
+> + @zdu room #1
+msg 1
+.
+
+# add another message
+> + @zdu room #2
+msg 2
+.
+
+# query for last message from room
+> ? room
+.
+@zdu room #2
+msg 2
+
+# query for last 2 messages from room
+> ? room 2
+.
+@zdu room #2
+msg 2
+@zdu room #1
+msg 1
+
+# count can be greater than # of messages
+> ? room 22
+.
+@zdu room #2
+msg 2
+@zdu room #1
+msg 1
+
+# catch invalid count
+> ? room 2x
+.
+BAD_COUNT: bad COUNT arg "2x"
+
+# signal unknown room
+> ? room1
+.
+BAD_ROOM: unknown ROOM arg "room1"
+
+# must have user
+> + 
+.
+BAD_USER: missing USER arg
+
+# user must start with @
+> + tom
+.
+BAD_USER: USER arg "tom" does not start with a '@'
+
+# room missing: must start with a letter
+> + @tom #topic
+.
+BAD_ROOM: ROOM "#topic" does not start with an alphabetical character
+
+# topic must start with a '#'
+> + @tom room topic
+.
+BAD_TOPIC: topic "topic" does not start with a '#'
+
+# no message
+> + @tom room #topic
+.
+NO_MSG: missing message
+
+# typed ^D to indicate EOF
+> ^D
+$

@@ -1,0 +1,18 @@
++ @zdu test #xx #yy
+This is a test message
+.
+? test
+.
+? test #xx
+.
+? test #yy #xx
+.
++ @user test #zz
+Yet another test message
+.
+? test 5
+.
+? test #xx #zz
+.
+? test 1
+.
