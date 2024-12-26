@@ -26,4 +26,5 @@
 <br/>Focus: Transforming the project into a fully networked distributed chat system using TCP sockets for real-time messaging. 
 <br/>Techniques: TCP/IP socket programming, multi-threading or select() for concurrency, and user notifications for scalable networking. Each part builds upon the previous one, progressively introducing new concepts and techniques to develop a fully functional, distributed, and scalable chat system.
 
-### !- Iteration Module 4 and Iteration Module 5 are in the implementation phase right now, once the implementation is completed and reviewed, the following will be pushed to git accordingly -!
+#### Note: 
+The code for the above-mentioned project iterations is provided in the projects directory labeled as prj_No.
