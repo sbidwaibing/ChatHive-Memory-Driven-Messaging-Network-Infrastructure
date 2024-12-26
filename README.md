@@ -26,7 +26,4 @@
 <br/>Focus: Transforming the project into a fully networked distributed chat system using TCP sockets for real-time messaging. 
 <br/>Techniques: TCP/IP socket programming, multi-threading or select() for concurrency, and user notifications for scalable networking. Each part builds upon the previous one, progressively introducing new concepts and techniques to develop a fully functional, distributed, and scalable chat system.
 
-### <p align="justify">+++ PROHIBITED ACTIONS ! +++</p> 
-<p align="justify">THIS SOFTWARE AND ITS ASSOCIATED DOCUMENTATION FILES SHALL NOT BE COPIED, DISTRIBUTED, OR SHARED IN ANY FORM WITHOUT EXPLICIT PRIOR WRITTEN PERMISSION FROM THE AUTHORS. UNAUTHORIZED COPYING, DISTRIBUTION, OR SHARING OF THE SOFTWARE, EITHER IN SOURCE OR BINARY FORMS, MAY RESULT IN LEGAL ACTION BEING TAKEN AGAINST THE VIOLATOR.<br/><br/>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. <br/><br/>Author: Sukrut Bidwai</p>
-
 ### !- Iteration Module 4 and Iteration Module 5 are in the implementation phase right now, once the implementation is completed and reviewed, the following will be pushed to git accordingly -!
