@@ -1,0 +1,26 @@
++ @zdu test #tag
+Test message
+.
+  x
+.
+ +
+.
+ + 	test
+.
++ @user 
+.
++   @user #topic
+.
++ @user    room   topic
+.
++ @user    room   #topic
+.
+ ?
+.
+? @user
+.
+  ? room
+.
+? test #tag1
+.
+? test #tag

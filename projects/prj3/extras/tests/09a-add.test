@@ -1,0 +1,19 @@
++   @ZDU  Room-09 #db #sqlitE #db
+sqlite is pretty cool
+.
++   @ZDu  Room-09 #db #MONGODB #db #JSON #js #python #ruby
+mongodb supports storing structured documents (essentially 
+JSON) and can be accessed from many programming languages
+include popular scripting languges like JavaScript, Python 
+and Ruby.
+.
++ @tOm room-09 #fork #syscall #unix #stdio
+Worth noting: If stdio buffers are not flushed before a fork(), 
+then the child will also get a copy of that buffer.
+.
++ @Jane room-09 #pipe #syscall #unix #file-descriptor
+The pipe() syscall returns two file descriptors fd[2] to a 
+pipe such that fd[0] refers to the read end of the pipe 
+and fd[1] refers to the write end of the pipe. This pipe 
+is typically used for inter-process communication.
+.

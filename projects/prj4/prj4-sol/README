@@ -1,0 +1,83 @@
+Team Member 1 Name:	XXX
+Team Member 1 B-Number:	XXX
+Team Member 1 Email:	XXX
+
+Team Member 2 Name:	XXX
+Team Member 2 B-Number:	XXX
+Team Member 2 Email:	XXX
+
+When chatd is executed, it creates and attaches shm.  Creates SERVER,
+DATA and MEMORY semaphores in shm with pshared.
+
+  MEMORY_SEM,        //1 means shm is empty
+  SERVER_DATA_SEM,   //1 means shm contains data from server
+  CLIENT_DATA_SEM,   //1 means shm contains data from client
+
+There are 2 levels of protocol.  A top-level protocol where we have a
+request and response.  Both request and response have headers which
+specify the # of data bytes following data bytes.
+
+Then we have a lower-level protocol to transmit the specified
+data bytes using a finite shm.
+
+We can use the following ClientHdr to send a command from client
+to server:
+
+typedef struct {
+  CmdType cmd;
+  size_t nTopics;  //used by ADD_CMD and QUERY_CMD
+  size_t count;    //used only by QUERY_CMD
+  size_t reqSize;  //total size of request which follows
+} ClientHdr;
+
+The following ServerHdr will be used to send a response from
+the server to the client:
+
+typedef struct {
+  Status status;    
+  size_t resSize;
+} ServerHdr;
+
+Since communication is via shared memory, we can assume binary
+compatibility between client and server.  Hence we can exchange binary
+structures between client and server as long as the structure fits
+within the shm and does not contain any pointers.
+
+
+The shared memory is setup with the following struct:
+
+typedef struct {
+  size_t shmSize;
+  size_t bufSize;
+  sem_t sems[N_SEM];
+  char buf[];
+} Shm;
+
+
+BUF_SIZE for buf[] will be SHM_SIZE - offsetof data.buf.
+
+The total amount of data to be sent is known using the higher-level protocol.
+
+To send data from client to server:
+
+  while (data to send) {
+    grab MEMORY_SEM;
+    copy data bytes to shm buf (remaining data or as much as will fit)
+    signal CLIENT_DATA_SEM
+  }
+
+To have server receive data from client:
+
+  while (data to receive) {
+    wait on CLIENT_DATA_SEM;
+    copy shm buf to local data ((remaining data or shm buf capacity)
+    signal MEMORY_SEM
+
+To send data from server to client, same as above, but using SERVER_DATA_SEM.
+
+We first send the header in binary, assuming it fits within the shm
+(verified using assert() in make_chat()).  Then we send the rest of
+the data using multiple uses of the shm.
+
+
+

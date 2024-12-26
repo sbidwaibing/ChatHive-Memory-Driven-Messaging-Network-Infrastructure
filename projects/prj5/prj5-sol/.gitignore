@@ -1,0 +1,9 @@
+*.o
+*~
+chatc
+chatd
+select-chatc
+.pid
+.deps
+*.db
+:memory:

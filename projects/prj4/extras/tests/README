@@ -1,0 +1,9 @@
+*.test:      chat commands
+*.out:       chat output
+
+*-err.test:  chat commands which result in error
+*-err.out:   chat output with error messages removed after :
+
+Note that if there is a test NNx-*.test, then all NNx-*.test must be run
+as they are set up to use the same sqlite db file.
+

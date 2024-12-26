@@ -1,0 +1,171 @@
+# annotated log
+
+# start program using new LOG-data.db DB.  Note that it prints the
+# server PID on stdout.
+$ ./chat LOG-data.db
+2590035
+
+# search for messages in room sysprog, no such room since there is no data
+> ? sysprog
+.
+err BAD_ROOM: unknown room
+
+# add a message
+> +   @ZDU  SysProg #db #sqlitE #db
+sqlite is pretty cool
+.
+ok
+
+# add another message
+> +   @ZDu  SysPROG #db #MONGODB #db #JSON #js #python #ruby
+mongodb supports storing structured documents (essentially 
+JSON) and can be accessed from many programming languages
+include popular scripting languges like JavaScript, Python 
+and Ruby.
+.
+ok
+
+# yet one more
+> + @tOm sysprog #fork #syscall #unix #stdio
+Worth noting: If stdio buffers are not flushed before a fork(), 
+then the child will also get a copy of that buffer.
+.
+ok
+
+# and one last one
+> + @Jane sysprog #pipe #syscall #unix #file-descriptor
+The pipe() syscall returns two file descriptors fd[2] to a 
+pipe such that fd[0] refers to the read end of the pipe 
+and fd[1] refers to the write end of the pipe. This pipe 
+is typically used for inter-process communication.
+.
+ok
+
+# look for messages in sysprog room; default count is 1
+# the ok is printed before the start of output
+# note the timestamps
+> ? Sysprog
+.
+ok
+2024-09-30T16:16:40.293
+@jane sysprog #file-descriptor #pipe #syscall #unix
+The pipe() syscall returns two file descriptors fd[2] to a 
+pipe such that fd[0] refers to the read end of the pipe 
+and fd[1] refers to the write end of the pipe. This pipe 
+is typically used for inter-process communication.
+
+# retrieve all messages for sysprog by using a large count
+# note sorted with newest first
+> ? Sysprog 100
+.
+ok
+2024-09-30T16:16:40.293
+@jane sysprog #file-descriptor #pipe #syscall #unix
+The pipe() syscall returns two file descriptors fd[2] to a 
+pipe such that fd[0] refers to the read end of the pipe 
+and fd[1] refers to the write end of the pipe. This pipe 
+is typically used for inter-process communication.
+2024-09-30T16:16:20.994
+@tom sysprog #fork #stdio #syscall #unix
+Worth noting: If stdio buffers are not flushed before a fork(), 
+then the child will also get a copy of that buffer.
+2024-09-30T16:15:43.676
+@zdu sysprog #db #js #json #mongodb #python #ruby
+mongodb supports storing structured documents (essentially 
+JSON) and can be accessed from many programming languages
+include popular scripting languges like JavaScript, Python 
+and Ruby.
+2024-09-30T16:15:30.156
+@zdu sysprog #db #sqlite
+sqlite is pretty cool
+
+# look for only two messages
+> ? Sysprog 2
+.
+ok
+2024-09-30T16:16:40.293
+@jane sysprog #file-descriptor #pipe #syscall #unix
+The pipe() syscall returns two file descriptors fd[2] to a 
+pipe such that fd[0] refers to the read end of the pipe 
+and fd[1] refers to the write end of the pipe. This pipe 
+is typically used for inter-process communication.
+2024-09-30T16:16:20.994
+@tom sysprog #fork #stdio #syscall #unix
+Worth noting: If stdio buffers are not flushed before a fork(), 
+then the child will also get a copy of that buffer.
+
+# look for messages with topic #ruby
+> ? Sysprog 100 #ruby
+.
+ok
+2024-09-30T16:15:43.676
+@zdu sysprog #db #js #json #mongodb #python #ruby
+mongodb supports storing structured documents (essentially 
+JSON) and can be accessed from many programming languages
+include popular scripting languges like JavaScript, Python 
+and Ruby.
+
+# look for messages with topics #unix and #pipe
+> ? Sysprog 100 #unix #pipe
+.
+ok
+2024-09-30T16:16:40.293
+@jane sysprog #file-descriptor #pipe #syscall #unix
+The pipe() syscall returns two file descriptors fd[2] to a 
+pipe such that fd[0] refers to the read end of the pipe 
+and fd[1] refers to the write end of the pipe. This pipe 
+is typically used for inter-process communication.
+
+# look for messages having multiple topics
+# (note the repeated topics).
+> ? SysProg 100 #db #mongoDB #json #js #python #ruby #js #db
+.
+ok
+2024-09-30T16:15:43.676
+@zdu sysprog #db #js #json #mongodb #python #ruby
+mongodb supports storing structured documents (essentially 
+JSON) and can be accessed from many programming languages
+include popular scripting languges like JavaScript, Python 
+and Ruby.
+
+# no messages for #unix and #db
+> ? SysProg 100  #unix #db
+.
+ok
+
+# catch an unknown room error
+> ? SysProg1 100  #unix #db
+.
+err BAD_ROOM: unknown room
+
+# catch an unknown topic error
+> ? SysProg 100  #unix #db1
+.
+err BAD_TOPIC: unknown topic
+
+# a bad command and other purely syntactic errors should be handled
+# by the provided chat-cmd module
+> - SysProg 100  #unix #db
+.
+err BAD_COMMAND: unknown command "-"
+
+# typed ^D to indicate EOF and terminate the program
+> ^D $
+
+# restarted program with the same DB file; new server PID printed
+$ ./chat LOG-data.db
+2742239
+
+# previous data is retained
+> ? sysprog #python
+.
+ok
+2024-09-30T16:15:43.676
+@zdu sysprog #db #js #json #mongodb #python #ruby
+mongodb supports storing structured documents (essentially 
+JSON) and can be accessed from many programming languages
+include popular scripting languges like JavaScript, Python 
+and Ruby.
+
+# terminate second run by typing a ^D
+> ^D $

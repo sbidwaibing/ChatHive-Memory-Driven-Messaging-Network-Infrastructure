@@ -1,0 +1,12 @@
+*/*~
+*/*.git*
+*/.zipignore
+*/*.zip
+*/*.o
+*/*.so
+*/.deps
+*/chat
+*/.pid
+*/*.db
+*/:memory:
+

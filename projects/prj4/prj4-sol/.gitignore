@@ -1,0 +1,7 @@
+*.o
+*~
+chat
+.pid
+.deps
+*.db
+:memory:

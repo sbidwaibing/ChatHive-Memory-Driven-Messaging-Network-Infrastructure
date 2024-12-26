@@ -1,0 +1,13 @@
+This directory contains two kinds of files:
+
+  : `*.test` :
+    A file containing a test which is expected to succeed.
+    If the basename ends with `-err`, then stderr is expected to
+    contain error message lines starting with a `:`-terminated error
+    code prefix.
+
+  : `*.out` :
+    A file containing the expected output for the corresponding
+    `*.test` file.  All error lines are replaced by their error
+    code prefixes.
+

@@ -1,0 +1,62 @@
+<svg xmlns='http://www.w3.org/2000/svg' style='font-size:initial;' class="pikchr" viewBox="0 0 595.411 1066.32">
+<path d="M261.706,182.16L333.706,182.16L333.706,95.76L312.106,74.16L261.706,74.16Z"  style="fill:rgb(255,215,0);stroke-width:2.16;stroke:rgb(0,0,0);" />
+<path d="M312.106,74.16L312.106,95.76L333.706,95.76"  style="fill:none;stroke-width:2.16;stroke:rgb(0,0,0);" />
+<text x="297.706" y="128.16" text-anchor="middle" fill="rgb(0,0,0)" dominant-baseline="central">chatd</text>
+<path d="M243.706,326.16L351.706,326.16L351.706,254.16L243.706,254.16Z"  style="fill:rgb(255,215,0);stroke-width:2.16;stroke:rgb(0,0,0);" />
+<text x="297.706" y="290.16" text-anchor="middle" fill="rgb(0,0,0)" dominant-baseline="central">server</text>
+<polygon points="297.706,254.16 293.386,242.64 302.026,242.64" style="fill:rgb(0,0,0)"/>
+<path d="M297.706,182.16L297.706,248.4"  style="fill:none;stroke-width:2.16;stroke:rgb(0,0,0);stroke-dasharray:2.16,7.2;" />
+<text x="297.706" y="218.16" text-anchor="end" fill="rgb(0,0,0)" dominant-baseline="central">run </text>
+<path d="M243.706,470.16L351.706,470.16L351.706,398.16L243.706,398.16Z"  style="fill:rgb(255,215,0);stroke-width:2.16;stroke:rgb(0,0,0);" />
+<text x="297.706" y="434.16" text-anchor="middle" fill="rgb(0,0,0)" dominant-baseline="central">daemon</text>
+<path d="M297.706,326.16L297.706,398.16L297.706,398.16"  style="fill:none;stroke-width:2.16;stroke-linejoin:round;stroke:rgb(0,0,0);stroke-dasharray:7.2,7.2;" />
+<text x="297.706" y="362.16" text-anchor="end" fill="rgb(0,0,0)" dominant-baseline="central">fork </text>
+<path d="M92.5056,614.16L200.506,614.16L200.506,542.16L92.5056,542.16Z"  style="fill:rgb(255,215,0);stroke-width:2.16;stroke:rgb(0,0,0);" />
+<text x="146.506" y="578.16" text-anchor="middle" fill="rgb(0,0,0)" dominant-baseline="central">worker 1</text>
+<path d="M394.906,614.16L502.906,614.16L502.906,542.16L394.906,542.16Z"  style="fill:rgb(255,215,0);stroke-width:2.16;stroke:rgb(0,0,0);" />
+<text x="448.906" y="578.16" text-anchor="middle" fill="rgb(0,0,0)" dominant-baseline="central">worker 2</text>
+<path d="M146.506,542.16L272.506,470.16"  style="fill:none;stroke-width:2.16;stroke:rgb(0,0,0);stroke-dasharray:7.2,7.2;" />
+<text x="209.506" y="494.46" text-anchor="middle" fill="rgb(0,0,0)" transform="rotate(-29.7448813 209.506,506.16)" dominant-baseline="central">double</text>
+<text x="209.506" y="517.86" text-anchor="middle" fill="rgb(0,0,0)" transform="rotate(-29.7448813 209.506,506.16)" dominant-baseline="central">fork</text>
+<path d="M322.906,470.16L448.906,542.16"  style="fill:none;stroke-width:2.16;stroke:rgb(0,0,0);stroke-dasharray:7.2,7.2;" />
+<text x="385.906" y="494.46" text-anchor="middle" fill="rgb(0,0,0)" transform="rotate(29.7448813 385.906,506.16)" dominant-baseline="central">double</text>
+<text x="385.906" y="517.86" text-anchor="middle" fill="rgb(0,0,0)" transform="rotate(29.7448813 385.906,506.16)" dominant-baseline="central">fork</text>
+<path d="M92.5056,794.16L200.506,794.16L200.506,722.16L92.5056,722.16Z"  style="fill:rgb(0,255,255);stroke-width:2.16;stroke:rgb(0,0,0);" />
+<text x="146.506" y="748.08" text-anchor="middle" fill="rgb(0,0,0)" dominant-baseline="central">client 1</text>
+<text x="146.506" y="768.24" text-anchor="middle" font-style="italic" fill="rgb(0,0,0)" dominant-baseline="central">pid1</text>
+<path d="M394.906,794.16L502.906,794.16L502.906,722.16L394.906,722.16Z"  style="fill:rgb(0,255,255);stroke-width:2.16;stroke:rgb(0,0,0);" />
+<text x="448.906" y="748.08" text-anchor="middle" fill="rgb(0,0,0)" dominant-baseline="central">client 2</text>
+<text x="448.906" y="768.24" text-anchor="middle" font-style="italic" fill="rgb(0,0,0)" dominant-baseline="central">pid2</text>
+<path d="M110.506,992.16L182.506,992.16L182.506,905.76L160.906,884.16L110.506,884.16Z"  style="fill:rgb(0,255,255);stroke-width:2.16;stroke:rgb(0,0,0);" />
+<path d="M160.906,884.16L160.906,905.76L182.506,905.76"  style="fill:none;stroke-width:2.16;stroke:rgb(0,0,0);" />
+<text x="146.506" y="938.16" text-anchor="middle" fill="rgb(0,0,0)" dominant-baseline="central">chatc</text>
+<path d="M412.906,992.16L484.906,992.16L484.906,905.76L463.306,884.16L412.906,884.16Z"  style="fill:rgb(0,255,255);stroke-width:2.16;stroke:rgb(0,0,0);" />
+<path d="M463.306,884.16L463.306,905.76L484.906,905.76"  style="fill:none;stroke-width:2.16;stroke:rgb(0,0,0);" />
+<text x="448.906" y="938.16" text-anchor="middle" fill="rgb(0,0,0)" dominant-baseline="central">chatc</text>
+<polygon points="132.106,614.16 138.586,631.44 125.626,631.44" style="fill:rgb(0,0,0)"/>
+<path d="M132.106,722.16L132.106,622.8"  style="fill:none;stroke-width:3.24;stroke:rgb(0,0,0);" />
+<text x="132.106" y="668.16" text-anchor="end" font-style="italic" fill="rgb(0,0,0)" dominant-baseline="central">pid1.1 </text>
+<polygon points="160.906,722.16 154.426,704.88 167.386,704.88" style="fill:rgb(0,0,0)"/>
+<path d="M160.906,614.16L160.906,713.52"  style="fill:none;stroke-width:3.24;stroke:rgb(0,0,0);" />
+<text x="160.906" y="668.16" text-anchor="start" font-style="italic" fill="rgb(0,0,0)" dominant-baseline="central"> pid1.0</text>
+<polygon points="434.506,614.16 440.986,631.44 428.026,631.44" style="fill:rgb(0,0,0)"/>
+<path d="M434.506,722.16L434.506,622.8"  style="fill:none;stroke-width:3.24;stroke:rgb(0,0,0);" />
+<text x="434.506" y="668.16" text-anchor="end" font-style="italic" fill="rgb(0,0,0)" dominant-baseline="central">pid2.1</text>
+<polygon points="463.306,722.16 456.826,704.88 469.786,704.88" style="fill:rgb(0,0,0)"/>
+<path d="M463.306,614.16L463.306,713.52"  style="fill:none;stroke-width:3.24;stroke:rgb(0,0,0);" />
+<text x="463.306" y="668.16" text-anchor="start" font-style="italic" fill="rgb(0,0,0)" dominant-baseline="central"> pid2.0</text>
+<polygon points="146.506,794.16 150.826,805.68 142.186,805.68" style="fill:rgb(0,0,0)"/>
+<path d="M146.506,884.16L146.506,799.92"  style="fill:none;stroke-width:2.16;stroke:rgb(0,0,0);stroke-dasharray:2.16,7.2;" />
+<text x="146.506" y="839.16" text-anchor="end" fill="rgb(0,0,0)" dominant-baseline="central">run </text>
+<polygon points="448.906,794.16 453.226,805.68 444.586,805.68" style="fill:rgb(0,0,0)"/>
+<path d="M448.906,884.16L448.906,799.92"  style="fill:none;stroke-width:2.16;stroke:rgb(0,0,0);stroke-dasharray:2.16,7.2;" />
+<text x="448.906" y="839.16" text-anchor="end" fill="rgb(0,0,0)" dominant-baseline="central">run </text>
+<polygon points="297.706,470.16 304.186,487.44 291.226,487.44" style="fill:rgb(0,0,0)"/>
+<path d="M200.506,758.16L297.706,758.16L297.706,478.8"  style="fill:none;stroke-width:3.24;stroke-linejoin:round;stroke:rgb(0,0,0);" />
+<text x="249.106" y="594" text-anchor="start" fill="rgb(0,0,0)" dominant-baseline="central">Well-    </text>
+<text x="249.106" y="614.16" text-anchor="start" fill="rgb(0,0,0)" dominant-baseline="central">Known </text>
+<text x="249.106" y="634.32" text-anchor="start" fill="rgb(0,0,0)" dominant-baseline="central">FIFO   </text>
+<polygon points="297.706,470.16 304.186,487.44 291.226,487.44" style="fill:rgb(0,0,0)"/>
+<path d="M394.906,758.16L297.706,758.16L297.706,478.8"  style="fill:none;stroke-width:3.24;stroke-linejoin:round;stroke:rgb(0,0,0);" />
+</svg>
+

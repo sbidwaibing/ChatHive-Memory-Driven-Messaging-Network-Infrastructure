@@ -1,0 +1,15 @@
+Largely a reimplementation of Project 3, in fact the guts of the code
+is repurposed from Project 3.
+
+Uses 2 threads in client: the main thread which reads the terminal and
+an auxiliary thread which largely copies the server response to the
+terminal.  When a user types in a command, the main thread sends it to
+the server and forgets about it.  The auxiliary thread will pick up
+any server response.
+
+The server too is multi-threaded.  The main thread simply listens on the
+server socket.  When a connection is accepted, it is dispatched on
+a client thread.  The main thread stores an array of thread-infos for
+all possible client threads.  When a client thread wants to broadcast
+a message to a room it scans this array selecting only active client
+threads for the room (not equal to itself).

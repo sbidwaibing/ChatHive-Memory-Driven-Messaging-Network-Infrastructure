@@ -1,0 +1,34 @@
+Client writes a header line containing
+
+       cmdType count nTopics nBytes
+
+(count is a dummy value for a query command).
+
+This is followed by nBytes bytes containing the relevant strings in
+the command, including the NUL terminators.  Specifically, there
+is no user and message string for a QUERY command.
+
+Server writes a header line containing a
+
+       status nBytes
+
+where status is 0 for a success response and non-zero for an error. 
+
+An error response will contains nBytes of error message.
+
+A success header will be followed by nBytes of the success message.
+This will be followed by more success responses until there is
+a success header with nBytes == 0.
+
+Note that for an END_CMD the server exits silently without sending
+any response to the client.  At the time of assignment of this project,
+we had not covered the wait() calls; if we had, I would have had the
+client wait for the server to terminate before terminating itself.
+
+The code uses C I/O as far as possible, depending on fread() and
+fwrite() to take care of all buffering and pipe capacity issues.
+The drawback of this policy is that we may need to malloc()
+buffers of arbitrary size.  We will get around this limitation
+in project 4 (assuming we have time for it).
+
+The code has been refactored to make it easier to reuse for Project 3.

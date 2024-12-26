@@ -1,0 +1,28 @@
+Largely a reimplementation of Project 3, in fact the guts of the code
+is repurposed from Project 3.
+
+There are two client implementations: the default chatc client
+uses multiple threads; the other select-chatc uses select().
+
+chatc uses 2 threads: the main thread which reads the terminal and
+an auxiliary thread which largely copies the server response to the
+terminal.  When a user types in a command, the main thread sends it to
+the server and forgets about it.  The auxiliary thread will pick up
+any server response.
+
+select-chatc uses select() monitoring in and the socket.  It is
+built by moving the read_line_args() call from main() in chatc.c
+to a function which is triggered when the input is ready in select-chat.c.
+The thread function from chatc.c is removed and its action done when
+the socket descriptor is ready.
+
+The server is multi-threaded.  The main thread simply listens on the
+server socket.  When a connection is accepted, it is dispatched on
+a client thread.  The main thread stores an array of thread-infos for
+all possible client threads.  When a client thread wants to broadcast
+a message to a room it scans this array selecting only active client
+threads for the room (not equal to itself).
+
+
+
+

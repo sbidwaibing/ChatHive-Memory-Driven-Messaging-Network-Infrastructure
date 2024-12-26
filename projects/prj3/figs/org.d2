@@ -1,0 +1,58 @@
+# abandoning: grid diagram almost perfect, but insists on converting
+# two unidirectional edges with distinct labels between nodes into a
+# single bidirectional edge with the same label!  Tried various elk
+# layouts, but get internal errors for most of them.
+
+vars: {
+  d2-config: {
+    layout-engine: elk
+  }
+}
+
+classes: {
+  NONE: {style.opacity: 0}
+}
+
+grid-rows: 4
+grid-columns: 3
+vertical-gap: 150
+
+  empty1: {class: NONE}
+  chatd
+  empty2: {class: NONE}
+
+  empty3: {class: NONE}
+  daemon
+  empty4: {class: NONE}
+
+  worker1
+  empty5: {class: NONE}
+  worker2
+
+  chatd -> daemon: fork
+  daemon -> worker1: double fork
+  daemon -> worker2: double fork
+
+
+  chatc1 : chatc\npid1
+  empty6: "" {class: NONE}
+  chatc2 : chatc\npid2
+
+chatc1 -> daemon: request
+chatc2 -> daemon: request
+
+chatc1 -> worker1: pid1.1
+worker1 -> chatc1: pid1.0
+
+chatc2 -> worker2: pid2.1
+worker2 -> chatc2: pid2.0
+
+
+title: Process Organization {
+  shape: text
+  near: bottom-center
+  style: {
+    font-size: 55
+    bold: true
+  }
+}

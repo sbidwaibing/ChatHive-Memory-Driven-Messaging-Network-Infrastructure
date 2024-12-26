@@ -1,0 +1,43 @@
+margin = 0.5
+fill = gold
+
+#Server
+  Chatd: file "chatd"
+  Server: box "server" with .n at Chatd.s + (0, -0.5)
+  arrow "run " rjust dotted from Chatd.s to Server.n;
+  Daemon: box "daemon" with .n at Server.s + (0, -0.5)
+  line "fork " rjust  dashed down from Server.s to Daemon.n
+  Worker1: box "worker 1" with .ne at (Daemon.sw + (-0.3, -0.5))
+  Worker2: box "worker 2" with .nw at (Daemon.se + (0.3, -0.5))
+  line "double" aligned "fork" aligned dashed \
+    from Worker1.n to (Daemon.sw + (0.2, 0))
+  line "double" aligned "fork" aligned dashed \
+    from (Daemon.se + (-0.2, 0)) to Worker2.n
+
+fill = cyan
+
+#Client
+  Client1: box "client 1" "pid1" italic at Worker1.s + (0, -1)
+  Client2: box "client 2" "pid2" italic at Worker2.s + (0, -1)
+  Chatc1: file "chatc" at Client1.s + (0, -1)
+  Chatc2: file "chatc" at Client2.s + (0, -1)
+  
+
+arrow thick "pid1.1 " italic rjust \
+  from Client1.n + (-0.1, 0) to Worker1.s + (-0.1, 0)
+arrow thick " pid1.0" italic ljust \
+  from Worker1.s + (0.1, 0) to Client1.n + (0.1, 0)
+  
+arrow thick "pid2.1" italic rjust \
+  from Client2.n + (-0.1, 0) to Worker2.s + (-0.1, 0)
+arrow thick " pid2.0" italic ljust \
+  from Worker2.s + (0.1, 0) to Client2.n + (0.1, 0)
+
+arrow "run " rjust dotted from Chatc1.n to Client1.s;
+arrow "run " rjust dotted from Chatc2.n to Client2.s;
+
+arrow thick "Well-    " ljust "Known " ljust "FIFO   " ljust \
+  from Client1.e go right until even with Daemon.s then to Daemon.s;
+arrow thick \
+  from Client2.w go left until even with Daemon.s then to Daemon.s;
+

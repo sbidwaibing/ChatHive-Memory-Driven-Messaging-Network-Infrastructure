@@ -1,0 +1,12 @@
+D2_SRCS =		$(wildcard *.d2)
+
+TARGETS =		$(patsubst %.d2, %.svg, $(D2_SRCS))
+
+
+all:			$(TARGETS)
+
+%.svg:			%.d2
+			d2 $<
+#			d2 --layout=elk \
+#                           --elk-algorithm=org.eclipse.elk.layered \
+#                           $<

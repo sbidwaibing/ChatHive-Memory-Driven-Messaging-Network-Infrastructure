@@ -1,0 +1,7 @@
+*.test:      chat commands
+*.out:       chat output
+
+*-err.test:  chat commands which result in error
+*-err.out:   chat output with error messages removed after :
+
+All tests are run consecutively on the same persistent db

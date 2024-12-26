@@ -1,0 +1,31 @@
+Team Member 1 Name:	XXX
+Team Member 1 B-Number:	XXX
+Team Member 1 Email:	XXX
+
+Team Member 2 Name:	XXX
+Team Member 2 B-Number:	XXX
+Team Member 2 Email:	XXX
+
+
+When chatd is executed, it changes to SERVER_DIR and verifies that
+DBFILE_PATH can be opened as a ChatDb.  It then opens the
+well-known FIFO, creates a daemon process and prints out
+the daemon process PID on stdout and exits.
+
+The daemon process sits in an infinite loop blocked on the well-known
+FIFO. When it reads a client pid PID on the well-known FIFO, it uses a
+double-fork to create a worker process dedicated to PID.  The worker
+process opens pre-existing fifos PID.0/PID.1 writing/reading
+respectively.  It then uses the protocol from prj2-sol for servicing
+client PID.
+
+When a chatc client is started up in a process PID, it changes to the
+SERVER_DIR, creates FIFOs PID.0 and PID.1, writes PID to the
+well-known FIFO and then opens PID.0/PID.1 for reading/writing
+respectively.  It then uses the protocol from prj2-sol for servicing
+chat commands.
+
+The implementation reuses the follow identical files between this
+project and prj2-sol: common.[ch], client.[ch], server-loop.[ch].
+
+

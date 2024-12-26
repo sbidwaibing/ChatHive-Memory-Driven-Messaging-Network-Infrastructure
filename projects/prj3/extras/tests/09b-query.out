@@ -1,0 +1,60 @@
+ok
+YYYY-MM-DDThh:mm:ss.ttt
+@jane room-09 #file-descriptor #pipe #syscall #unix
+The pipe() syscall returns two file descriptors fd[2] to a 
+pipe such that fd[0] refers to the read end of the pipe 
+and fd[1] refers to the write end of the pipe. This pipe 
+is typically used for inter-process communication.
+ok
+YYYY-MM-DDThh:mm:ss.ttt
+@jane room-09 #file-descriptor #pipe #syscall #unix
+The pipe() syscall returns two file descriptors fd[2] to a 
+pipe such that fd[0] refers to the read end of the pipe 
+and fd[1] refers to the write end of the pipe. This pipe 
+is typically used for inter-process communication.
+YYYY-MM-DDThh:mm:ss.ttt
+@tom room-09 #fork #stdio #syscall #unix
+Worth noting: If stdio buffers are not flushed before a fork(), 
+then the child will also get a copy of that buffer.
+YYYY-MM-DDThh:mm:ss.ttt
+@zdu room-09 #db #js #json #mongodb #python #ruby
+mongodb supports storing structured documents (essentially 
+JSON) and can be accessed from many programming languages
+include popular scripting languges like JavaScript, Python 
+and Ruby.
+YYYY-MM-DDThh:mm:ss.ttt
+@zdu room-09 #db #sqlite
+sqlite is pretty cool
+ok
+YYYY-MM-DDThh:mm:ss.ttt
+@jane room-09 #file-descriptor #pipe #syscall #unix
+The pipe() syscall returns two file descriptors fd[2] to a 
+pipe such that fd[0] refers to the read end of the pipe 
+and fd[1] refers to the write end of the pipe. This pipe 
+is typically used for inter-process communication.
+YYYY-MM-DDThh:mm:ss.ttt
+@tom room-09 #fork #stdio #syscall #unix
+Worth noting: If stdio buffers are not flushed before a fork(), 
+then the child will also get a copy of that buffer.
+ok
+YYYY-MM-DDThh:mm:ss.ttt
+@zdu room-09 #db #js #json #mongodb #python #ruby
+mongodb supports storing structured documents (essentially 
+JSON) and can be accessed from many programming languages
+include popular scripting languges like JavaScript, Python 
+and Ruby.
+ok
+YYYY-MM-DDThh:mm:ss.ttt
+@jane room-09 #file-descriptor #pipe #syscall #unix
+The pipe() syscall returns two file descriptors fd[2] to a 
+pipe such that fd[0] refers to the read end of the pipe 
+and fd[1] refers to the write end of the pipe. This pipe 
+is typically used for inter-process communication.
+ok
+YYYY-MM-DDThh:mm:ss.ttt
+@zdu room-09 #db #js #json #mongodb #python #ruby
+mongodb supports storing structured documents (essentially 
+JSON) and can be accessed from many programming languages
+include popular scripting languges like JavaScript, Python 
+and Ruby.
+ok

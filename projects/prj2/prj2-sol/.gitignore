@@ -1,0 +1,6 @@
+*.o
+*~
+chat
+.deps
+*.db
+:memory:
