@@ -1,0 +1,3 @@
+To keep the API simple, the routines in this library terminates the
+client program on error.  This should not be the case with a "real"
+library.
